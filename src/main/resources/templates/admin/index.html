@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Admin</title>
+
+    <link href="webjars/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="  collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="m-1 nav-item">
+                <h class="text-white font-weight-bold" th:utext="${user.getEmail()}">Navbar</h>
+            </li>
+            <li class="m-1 nav-item">
+                <h class="text-white">with roles:</h>
+            </li>
+            <li class="m-1 nav-item">
+                <h class="text-white"><span th:each="role : ${user.getRoles()}"
+                                            th:utext="${role.toString()}+'    '">Roles</span></h>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item ">
+                <a class="nav-link" th:href="@{/logout}">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+
+<!-- 2 столбца -->
+<div class="container-fluid vh-100">
+    <div class="row h-100 ">
+        <div class="col-md-2" style="padding-left: 0; padding-right: 0; padding-top: 20px;">
+            <!-- navBar слева для Admin и User -->
+            <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab"
+                   aria-controls="v-pills-home" aria-selected="true">Admin</a>
+                <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab"
+                   aria-controls="v-pills-profile" aria-selected="false">User</a>
+
+            </div>
+            <!-- Конец navBar слева для Admin и User -->
+        </div>
+        <div class="col bg-light" style="padding-top: 20px;">
+            <!-- Содержимое navBar слева для Admin и User -->
+            <div class="tab-content" id="v-pills-tabContent">
+                <!-- Вкладка Admin -->
+                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                     aria-labelledby="v-pills-home-tab">
+                    <h1>Admin panel</h1>
+                    <!-- Tabs All users и New user -->
+                    <ul class="nav nav-tabs">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#users">Users table</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#new">New user</a>
+                        </li>
+                    </ul>
+
+
+                    <div class="container-fluid" style="padding-right: 0; padding-left: 0;">
+                        <div class="tab-content">
+
+                            <!-- Tab All users-->
+                            <div role="tabpanel" class="tab-pane fade show active" id="users">
+                                <div class="card">
+                                    <h3 class="card-header">All users</h3>
+                                    <div class="card-body">
+                                        <div class="container-fluid">
+
+                                            <table class="table table-striped" id="mainTableWithUsers">
+                                                <thead>
+                                                <tr>
+                                                    <th> ID</th>
+                                                    <th> First Name</th>
+                                                    <th> Last Name</th>
+                                                    <th> e-mail</th>
+                                                    <th> Roles</th>
+                                                    <th></th>
+                                                    <th></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--скрытое дефолтное модальное окно -->
+                            <div class="modal fade" id="someDefaultModal" tabindex="-1" role="dialog"
+                                 aria-labelledby="someDefaultModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+
+                                        <div class="modal-body" style="padding-left: 120px; padding-right: 120px;">
+                                        </div>
+
+                                        <div class="modal-footer">
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Tab New user-->
+                            <div role="tabpanel" class="tab-pane fade show" id="new">
+                                <div class="card">
+                                    <h3 class="card-header">Add new user</h3>
+                                    <div class="card-body">
+                                        <div class="container-fluid">
+                                            <div class="row justify-content-center align-items-center">
+                                                <div class="col-lg-3">
+
+                                                    <form id="defaultSomeForm">
+                                                        <div class="form-group text-center">
+                                                            <label class="font-weight-bold ">First name </label>
+                                                            <label for="AddNewUserName"></label><input type="text" class="form-control" id="AddNewUserName"
+                                                                                                       placeholder="First name"/>
+                                                        </div>
+
+                                                        <div class="form-group text-center">
+                                                            <label class="font-weight-bold">Last name </label>
+                                                            <label for="AddNewUserLastName"></label><input type="text" class="form-control"
+                                                                                                           id="AddNewUserLastName"
+                                                                                                           placeholder="Last name"/>
+                                                        </div>
+
+                                                        <div class="form-group text-center">
+                                                            <label class="font-weight-bold">Email </label>
+                                                            <label for="AddNewUserEmail"></label><input type="email" class="form-control" aria-describedby="emailHelp"
+                                                                                                        id="AddNewUserEmail"
+                                                                                                        placeholder="Email"/>
+                                                        </div>
+
+                                                        <div class="form-group text-center">
+                                                            <label class="font-weight-bold">Password </label>
+                                                            <label for="AddNewUserPassword"></label><input type="text" class="form-control"
+                                                                                                           id="AddNewUserPassword"
+                                                                                                           placeholder="Password"/>
+                                                        </div>
+
+                                                        <div class="form-group text-center">
+                                                            <label class="font-weight-bold">Role </label>
+                                                            <label for="AddNewUserRoles"></label><select class="form-control" name="rolesList" id="AddNewUserRoles"
+                                                                                                         size="2"
+                                                                                                         multiple>
+                                                                <option value="ROLE_ADMIN">ADMIN</option>
+                                                                <option value="ROLE_USER">USER</option>
+                                                            </select>
+                                                        </div>
+
+                                                        <div class="col text-center">
+                                                            <button type="submit" class="btn btn-success" id="addNewUserButton">Add new user</button>
+                                                        </div>
+
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Конец вкладок All users и New user -->
+                </div>
+
+                <!-- Вкладка User -->
+                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                    <h1>User information-page</h1>
+                    <div class="card">
+                        <h3 class="card-header">About user</h3>
+                        <div class="card-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <table class="table table-striped" id="tableWithLogedInAdminInfo">
+                                        <thead>
+                                        <tr>
+                                            <th> ID</th>
+                                            <th> First Name</th>
+                                            <th> Last Name</th>
+                                            <th> e-mail</th>
+                                            <th> Roles</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-- Конец содержимого navBar слева для Admin и User -->
+        </div>
+    </div>
+</div>
+<!-- Конец двух столбцов -->
+<script src="webjars/jquery/3.5.1/jquery.js"></script>
+<script src="webjars/popper.js/1.16.0/umd/popper.js"></script>
+<script src="webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
+
+<script src="/js/main.js"></script>
+
+</body>
+</html>
